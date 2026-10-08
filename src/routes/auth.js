@@ -208,8 +208,8 @@ router.post('/logout', (req, res) => {
     try {
       const decoded = jwt.verify(token, config.jwtSecret);
       userId = decoded.userId;
-    } catch (_) {
-      // ignore
+    } catch {
+      // Ignore invalid token during logout
     }
   }
 

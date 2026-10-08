@@ -21,10 +21,12 @@ function getDb(customPath = null) {
   // Safely configure journal mode for container/cloud environments
   try {
     db.pragma('journal_mode = WAL');
-  } catch (_) {
+  } catch {
     try {
       db.pragma('journal_mode = DELETE');
-    } catch (_) {}
+    } catch {
+      // Fallback journal mode ignored if pragma not permitted
+    }
   }
   db.pragma('foreign_keys = ON');
 

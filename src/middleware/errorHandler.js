@@ -3,7 +3,7 @@ const config = require('../config');
 
 // Centralized error handling middleware
 // Prevents stack trace disclosure to users, logs full error details on the server
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res, _next) {
   logger.error('Unhandled Application Error', {
     message: err.message,
     stack: err.stack,

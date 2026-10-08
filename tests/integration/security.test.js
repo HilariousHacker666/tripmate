@@ -1,8 +1,8 @@
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
 const app = require('../../src/app');
-const config = require('../../src/config');
 const { getDb } = require('../../src/db');
+const { seed } = require('../../src/db/seed');
 
 describe('Negative Security Test Suite (Exam Security Focus)', () => {
   let ownerToken;
@@ -11,6 +11,9 @@ describe('Negative Security Test Suite (Exam Security Focus)', () => {
   let ownerTripId;
 
   beforeAll(async () => {
+    // Ensure database is freshly seeded with demo accounts
+    await seed();
+
     const initRes = await request(app).get('/health');
     const cookies = initRes.headers['set-cookie'] || [];
     const csrfCookie = cookies.find(c => c.startsWith('XSRF-TOKEN='));

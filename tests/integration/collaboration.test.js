@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/app');
-const { getDb } = require('../../src/db');
+const { seed } = require('../../src/db/seed');
 
 describe('Integration Test: Collaboration Lifecycle & Role Progression', () => {
   let ownerToken;
@@ -10,6 +10,9 @@ describe('Integration Test: Collaboration Lifecycle & Role Progression', () => {
   let csrfToken;
 
   beforeAll(async () => {
+    // Ensure database is freshly seeded with demo accounts
+    await seed();
+
     // Obtain CSRF token from initial safe request
     const initRes = await request(app).get('/health');
     const cookies = initRes.headers['set-cookie'] || [];
