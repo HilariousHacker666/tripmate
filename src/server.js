@@ -3,11 +3,24 @@ const config = require('./config');
 const { getDb } = require('./db');
 const logger = require('./utils/logger');
 
-// Initialize database schema
+// Initialize database schema and auto-seed demo accounts if empty
 try {
   logger.info('Initializing TripMate database connection and schema...');
-  getDb();
+  const db = getDb();
   logger.info('TripMate database initialized successfully.');
+
+  const userCount = db.prepare('SELECT COUNT(*) as count FROM Users').get().count;
+  if (userCount === 0) {
+    logger.info('No existing users detected. Auto-seeding demo accounts (owner, editor, viewer)...');
+    const { seed } = require('./db/seed');
+    seed().then(() => {
+      logger.info('Demo accounts auto-seeded successfully.');
+    }).catch(err => {
+      logger.error('Failed to auto-seed demo accounts', { error: err.message });
+    });
+  } else {
+    logger.info(`Database already contains ${userCount} user accounts.`);
+  }
 } catch (dbErr) {
   logger.error('CRITICAL: Failed to initialize SQLite database', { error: dbErr.message, stack: dbErr.stack });
   process.exit(1);
