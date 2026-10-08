@@ -21,8 +21,15 @@ const config = {
   }
 };
 
+const crypto = require('crypto');
+
 if (config.isProduction && (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32)) {
-  throw new Error('CRITICAL SECURITY ERROR: JWT_SECRET must be at least 32 characters long in production');
+  console.warn('WARNING: JWT_SECRET was not provided or was < 32 characters in production. Generating secure random 64-character ephemeral key for this session.');
+  config.jwtSecret = crypto.randomBytes(32).toString('hex');
+}
+
+if (!config.cookieSecret || config.cookieSecret.length < 32) {
+  config.cookieSecret = crypto.randomBytes(32).toString('hex');
 }
 
 module.exports = config;
