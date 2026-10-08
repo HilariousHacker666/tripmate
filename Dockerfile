@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY package*.json ./
 
 # Compile native addons directly in the final glibc environment
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev && npm rebuild better-sqlite3 --build-from-source
 
 COPY . .
 

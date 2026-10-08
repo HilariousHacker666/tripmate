@@ -18,8 +18,14 @@ function getDb(customPath = null) {
   }
   const db = new Database(dbFilePath);
 
-  // Enforce WAL mode for better concurrency and foreign keys for referential integrity
-  db.pragma('journal_mode = WAL');
+  // Safely configure journal mode for container/cloud environments
+  try {
+    db.pragma('journal_mode = WAL');
+  } catch (_) {
+    try {
+      db.pragma('journal_mode = DELETE');
+    } catch (_) {}
+  }
   db.pragma('foreign_keys = ON');
 
   initSchema(db);
