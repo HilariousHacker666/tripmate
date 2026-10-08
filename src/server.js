@@ -4,10 +4,17 @@ const { getDb } = require('./db');
 const logger = require('./utils/logger');
 
 // Initialize database schema
-getDb();
+try {
+  logger.info('Initializing TripMate database connection and schema...');
+  getDb();
+  logger.info('TripMate database initialized successfully.');
+} catch (dbErr) {
+  logger.error('CRITICAL: Failed to initialize SQLite database', { error: dbErr.message, stack: dbErr.stack });
+  process.exit(1);
+}
 
-const server = app.listen(config.port, () => {
-  logger.info(`TripMate Secure Server running on port ${config.port} in [${config.env}] mode`);
+const server = app.listen(config.port, '0.0.0.0', () => {
+  logger.info(`TripMate Secure Server running on http://0.0.0.0:${config.port} in [${config.env}] mode`);
 });
 
 // Graceful shutdown handling
