@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripMate Documentation Portal - 24CYS401 Lab Exam</title>
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --card-bg: #141414;
+      --border: #2A2A2A;
+      --text: #FFFFFF;
+      --text-muted: #888888;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      border: 1px solid #444;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 150ms ease, border-color 150ms ease;
+    }
+    .card:hover {
+      border-color: #666;
+      transform: translateY(-2px);
+    }
+    .card h3 {
+      font-size: 16px;
+      margin: 0 0 8px 0;
+    }
+    .card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TripMate Security Documentation Portal</h1>
+    <div class="badge">Course: 24CYS401 Secure Software Engineering</div>
+    <p style="color: var(--text-muted);">
+      Complete technical documentation, architecture blueprints, STRIDE threat models, test results, and exam verification deliverables.
+    </p>
+
+    <div class="grid">
+      <a href="EXAM_LAB_REPORT.md" class="card" style="border: 2px solid #FFF; grid-column: 1 / -1; background: #1A1A1A;">
+        <h3 style="font-size: 18px;">★ 24CYS401 END SEMESTER LAB EXAM REPORT (PHASES 1 TO 16)</h3>
+        <p>Complete examination report strictly aligned to the 100-mark question paper, with Mermaid diagrams, screenshot callouts, and evidence tables.</p>
+      </a>
+      <a href="COMPLETE_PROJECT_REPORT.md" class="card" style="border: 1px solid #444; grid-column: 1 / -1;">
+        <h3>COMPLETE PROJECT SPECIFICATION REPORT</h3>
+        <p>Full reference report containing all technical source documents and development files.</p>
+      </a>
+      <a href="01-agile.md" class="card">
+        <h3>01. Agile & XP Practices</h3>
+        <p>Scrum framework, Manifesto principles, and refactorings.</p>
+      </a>
+      <a href="02-srs.md" class="card">
+        <h3>02. SRS Specifications</h3>
+        <p>Prioritized FR, NFR, SR tables and CIA triad requirements.</p>
+      </a>
+      <a href="03-usecases.md" class="card">
+        <h3>03. Use Cases & Sequence</h3>
+        <p>Mermaid diagrams and collaboration scenarios.</p>
+      </a>
+      <a href="04-data-models.md" class="card">
+        <h3>04. Data Models & DFDs</h3>
+        <p>ER diagram, Level-0 and Level-1 DFD with trust boundaries.</p>
+      </a>
+      <a href="05-architecture.md" class="card">
+        <h3>05. Architecture Blueprint</h3>
+        <p>Layered pipeline, design patterns, and security mappings.</p>
+      </a>
+      <a href="06-ui.md" class="card">
+        <h3>06. UI Wireframes & Design</h3>
+        <p>Minimalist black/white wireframes and WCAG rules.</p>
+      </a>
+      <a href="07-threat-model.md" class="card">
+        <h3>07. STRIDE Threat Model</h3>
+        <p>8+ assets, 10+ threats, and data-flow analysis.</p>
+      </a>
+      <a href="08-attack-tree.md" class="card">
+        <h3>08. Attack Tree Model</h3>
+        <p>AND/OR tree and preventive/detective controls.</p>
+      </a>
+      <a href="09-backlog.md" class="card">
+        <h3>09. Product Backlog</h3>
+        <p>12+ user stories, epics, and Sprint 1 & 2 tasks.</p>
+      </a>
+      <a href="10-sprint-metrics.md" class="card">
+        <h3>10. Sprint Metrics & Burndown</h3>
+        <p>Scrum metrics, burndown chart, and Jira export.</p>
+      </a>
+      <a href="11-secure-build.md" class="card">
+        <h3>11. Secure Build & CI</h3>
+        <p>Branch protection, Gitleaks, and pipeline controls.</p>
+      </a>
+      <a href="15-logging-hardening.md" class="card">
+        <h3>15. Logging & Hardening</h3>
+        <p>Security alerts, metrics, and OS container hardening.</p>
+      </a>
+      <a href="16-final-review.md" class="card">
+        <h3>16. Traceability Chain</h3>
+        <p>Full 11-step requirement-to-deployment verification chain.</p>
+      </a>
+      <a href="defect-report.md" class="card">
+        <h3>Defect Report</h3>
+        <p>Real defect found in integration test and remediated.</p>
+      </a>
+      <a href="github-setup.md" class="card">
+        <h3>GitHub & Render Setup</h3>
+        <p>Step-by-step repository and deployment lab manual.</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

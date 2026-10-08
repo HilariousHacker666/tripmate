@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: tripmate
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true
+      - key: DB_FILE
+        value: /app/data/tripmate.db
+      - key: ALLOWED_ORIGIN
+        value: "*"

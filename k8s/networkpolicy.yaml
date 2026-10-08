@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: tripmate-network-policy
+  namespace: tripmate
+spec:
+  podSelector:
+    matchLabels:
+      app: tripmate
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    # Allow incoming HTTP traffic from inside the cluster or ingress controller on port 3000
+    - from: []
+      ports:
+        - protocol: TCP
+          port: 3000
+  egress:
+    # Restrict egress to internal DNS resolution and HTTPS external calls if needed
+    - ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+        - protocol: TCP
+          port: 443

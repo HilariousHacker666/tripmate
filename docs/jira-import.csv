@@ -1,0 +1,13 @@
+Issue key,Issue id,Summary,Issue Type,Status,Priority,Epic Link,Story Points,Description
+TM-1,1001,User Registration with Strong Password Policy,Story,Done,High,EPIC-1,3,Implement registration with 10+ chars complexity and bcrypt >= 12
+TM-2,1002,JWT Authentication in HttpOnly Cookie,Story,Done,High,EPIC-1,5,Implement JWT issuing with short 15m lifetime and HttpOnly cookie
+TM-3,1003,Account Lockout on 5 Failed Login Attempts,Story,Done,High,EPIC-1,3,Lock account for 15 minutes after 5 consecutive failed logins
+TM-4,1004,Trip Management CRUD with Budget,Story,Done,High,EPIC-2,5,Create update view and delete trips with date range validation
+TM-5,1005,Destination Management for Trips,Story,Done,Medium,EPIC-2,3,Add destinations to trip with arrival and departure dates
+TM-6,1006,Itinerary Timeline Activities,Story,Done,High,EPIC-2,5,Add itinerary activities linked to destinations with 24h format
+TM-7,1007,Expense Tracking with Category Aggregation,Story,Done,High,EPIC-2,5,Record expenses with positive amount check and parameterized SQL
+TM-8,1008,Trip Sharing and Collaborator Role Assignment,Story,Done,High,EPIC-3,5,Share trip by email with OWNER EDITOR or VIEWER role
+TM-9,1009,Collaborator Role Modification and Last Owner Protection,Story,Done,High,EPIC-3,5,Update role or revoke access preventing last owner removal
+TM-10,1010,Strict Server-side RBAC and BOLA Protection,Story,Done,High,EPIC-3,5,RequireTripRole middleware returning 404 for unauthorized trips
+TM-11,1011,Trip Security Audit Logging,Story,Done,Medium,EPIC-4,3,Structured audit trail recording user action IP and timestamp
+TM-12,1012,Double-Submit CSRF Protection,Story,Done,High,EPIC-4,5,Validate CSRF token cookie against header on state mutating requests

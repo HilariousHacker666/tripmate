@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tripmate
+  labels:
+    app.kubernetes.io/name: tripmate
+    app.kubernetes.io/part-of: sse-lab-exam

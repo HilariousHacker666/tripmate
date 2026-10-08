@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tripmate-deployment
+  namespace: tripmate
+  labels:
+    app: tripmate
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tripmate
+  template:
+    metadata:
+      labels:
+        app: tripmate
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+      containers:
+        - name: tripmate-app
+          image: ghcr.io/monis/tripmate:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tripmate-secrets
+                  key: JWT_SECRET
+            - name: DB_FILE
+              value: "/app/data/tripmate.db"
+          securityContext:
+            readOnlyRootFilesystem: false # Required for embedded SQLite DB file creation
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: tripmate-data
+              mountPath: /app/data
+      volumes:
+        - name: tripmate-data
+          emptyDir: {}

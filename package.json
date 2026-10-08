@@ -1,0 +1,55 @@
+{
+  "name": "tripmate",
+  "version": "1.0.0",
+  "description": "TripMate - Collaborative Secure Travel-Planning Web Application (24CYS401 Lab Exam)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "seed": "node src/db/seed.js",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:unit": "jest tests/unit --runInBand",
+    "test:integration": "jest tests/integration --runInBand",
+    "test:e2e": "jest tests/e2e --runInBand",
+    "test:security": "jest tests/integration/security.test.js --runInBand",
+    "fuzz": "node tests/fuzz/fuzz.js",
+    "lint": "eslint src/ tests/"
+  },
+  "keywords": [
+    "secure-software",
+    "rbac",
+    "trip-planner",
+    "cybersecurity",
+    "audit-logging"
+  ],
+  "author": "Student (24CYS401)",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^13.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-security": "^3.0.1",
+    "globals": "^15.15.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 10000,
+    "verbose": true,
+    "collectCoverage": false
+  }
+}

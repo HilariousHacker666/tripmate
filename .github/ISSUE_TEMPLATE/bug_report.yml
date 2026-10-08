@@ -1,0 +1,27 @@
+name: Bug / Security Issue Report
+description: Report a bug or security issue in TripMate
+labels: ["bug", "security"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for filing a report. Please verify no sensitive credentials or personal data are included.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Concise summary of the issue
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Detailed reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs Actual Behavior
+    validations:
+      required: true

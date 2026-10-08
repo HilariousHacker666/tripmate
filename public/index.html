@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripMate - Secure Collaborative Travel Planning</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar" style="display: none;">
+      <div class="brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </svg>
+        <span>TripMate</span>
+        <span class="brand-badge">SECURE</span>
+      </div>
+
+      <ul class="nav-menu">
+        <li>
+          <a class="nav-link active" data-view="dashboard" id="nav-dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="my-trips" id="nav-my-trips">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            My Trips
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="shared-trips" id="nav-shared-trips">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Shared with Me
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="audit-logs" id="nav-audit-logs">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            Audit Log
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="settings" id="nav-settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            Settings
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button id="themeToggleBtn" class="btn btn-secondary btn-sm" style="width: 100%;">
+          Toggle Theme (B/W)
+        </button>
+        <div class="user-profile">
+          <div class="user-info">
+            <span class="user-name" id="currentUserName">Alice</span>
+            <span class="user-email" id="currentUserEmail">alice@tripmate.local</span>
+          </div>
+          <button id="logoutBtn" class="btn btn-secondary btn-sm" title="Logout">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper" id="mainWrapper">
+      <!-- Top Bar -->
+      <header class="top-bar" id="topBar" style="display: none;">
+        <h1 class="page-title" id="pageHeading">Dashboard</h1>
+        <div id="topBarActions"></div>
+      </header>
+
+      <!-- Dynamic Content View Area -->
+      <main class="content-area" id="contentArea">
+        <!-- Auth View Container -->
+        <div id="authViewContainer" style="max-width: 420px; margin: 80px auto;">
+          <div class="card">
+            <div style="text-align: center; margin-bottom: 24px;">
+              <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 6px;">TripMate</h2>
+              <p style="color: var(--text-secondary); font-size: 13px;">Secure Travel Planning Portal (24CYS401)</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+              <div class="form-group">
+                <label class="form-label" for="loginEmail">Email Address</label>
+                <input type="email" id="loginEmail" class="form-control" required placeholder="name@domain.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-control" required placeholder="••••••••••••">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In</button>
+              <div style="text-align: center; margin-top: 16px;">
+                <a href="#" id="showRegisterLink" style="color: var(--text-secondary); font-size: 12px; text-decoration: underline;">Need an account? Register</a>
+              </div>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;">
+              <div class="form-group">
+                <label class="form-label" for="regName">Full Name</label>
+                <input type="text" id="regName" class="form-control" required placeholder="Alice Explorer">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="regEmail">Email Address</label>
+                <input type="email" id="regEmail" class="form-control" required placeholder="alice@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="regPassword">Password (Min 10 chars, uppercase, lowercase, number, symbol)</label>
+                <input type="password" id="regPassword" class="form-control" required placeholder="StrongPassword123!">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account</button>
+              <div style="text-align: center; margin-top: 16px;">
+                <a href="#" id="showLoginLink" style="color: var(--text-secondary); font-size: 12px; text-decoration: underline;">Already registered? Sign In</a>
+              </div>
+            </form>
+
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); font-size: 11px; color: var(--text-muted);">
+              <strong>Demo Accounts (Password: StrongPassword123!)</strong><br>
+              Owner: <code>owner@tripmate.local</code><br>
+              Editor: <code>editor@tripmate.local</code><br>
+              Viewer: <code>viewer@tripmate.local</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard / Trip Detail / Audit Views are injected dynamically via app.js -->
+        <div id="viewContainer" style="display: none;"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Global Modal Container -->
+  <div id="modalContainer" style="display: none;"></div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
