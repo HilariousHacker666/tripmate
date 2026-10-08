@@ -1,5 +1,5 @@
 # Use official Node 22 LTS image (Debian Bookworm, glibc) required by better-sqlite3@13
-FROM node:22-bookworm-slim
+FROM node:25-bookworm-slim
 
 WORKDIR /app
 
