@@ -1,47 +1,54 @@
 # Stage 1: Build stage
-FROM node:20-alpine AS builder
+FROM node:20-bullseye-slim AS builder
 
 WORKDIR /app
 
-# Install build dependencies for better-sqlite3 compilation if needed
-RUN apk add --no-cache python3 make g++
+# Install build tools for native addons (better-sqlite3, bcrypt)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
+
+# Install all dependencies and build native addons with release flags
 RUN npm ci
 
 COPY . .
 
-# Stage 2: Production runtime stage
-FROM node:20-alpine AS runner
+# Stage 2: Runtime stage
+FROM node:20-bullseye-slim AS runner
 
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=10000
 
-# Install runtime dependencies for sqlite
-RUN apk add --no-cache dumb-init curl
+# Install runtime dependencies (curl for healthcheck, dumb-init for PID 1 signal management)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    dumb-init \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create non-root system group and user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# Create dedicated non-root user and directories
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
-# Create logs directory and data directory with proper ownership
 RUN mkdir -p /app/logs /app/data && chown -R appuser:appgroup /app
 
-# Copy production dependencies and application files from builder
+# Copy built node_modules and code from builder stage
 COPY --from=builder --chown=appuser:appgroup /app/package*.json ./
 COPY --from=builder --chown=appuser:appgroup /app/node_modules ./node_modules
 COPY --from=builder --chown=appuser:appgroup /app/src ./src
 COPY --from=builder --chown=appuser:appgroup /app/public ./public
 
-# Drop all privileges; run as non-root
+# Run as non-root user
 USER appuser
 
-EXPOSE 3000
+EXPOSE 10000
 
-# Container Healthcheck
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/health || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:10000/health || exit 1
 
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "src/server.js"]

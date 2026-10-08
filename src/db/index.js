@@ -11,6 +11,11 @@ function getDb(customPath = null) {
   }
 
   const dbFilePath = customPath || path.resolve(process.cwd(), config.dbFile);
+  const dbDir = path.dirname(dbFilePath);
+  const fs = require('fs');
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
   const db = new Database(dbFilePath);
 
   // Enforce WAL mode for better concurrency and foreign keys for referential integrity
