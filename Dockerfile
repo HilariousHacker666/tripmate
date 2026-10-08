@@ -1,9 +1,12 @@
-# Stage 1: Build stage
-FROM node:20-bullseye-slim AS builder
+# Use official stable Node 20 LTS image (Debian Bookworm, glibc, with curl and ca-certificates built-in)
+FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Install build tools for native addons (better-sqlite3, bcrypt)
+ENV NODE_ENV=production
+ENV PORT=10000
+
+# Install build tools needed to compile native addons (better-sqlite3, bcrypt)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     make \
@@ -12,43 +15,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY package*.json ./
 
-# Install all dependencies and build native addons with release flags
-RUN npm ci
+# Compile native addons directly in the final glibc environment
+RUN npm ci --omit=dev
 
 COPY . .
 
-# Stage 2: Runtime stage
-FROM node:20-bullseye-slim AS runner
-
-WORKDIR /app
-
-ENV NODE_ENV=production
-ENV PORT=10000
-
-# Install runtime dependencies (curl for healthcheck, dumb-init for PID 1 signal management)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    dumb-init \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create dedicated non-root user and directories
-RUN groupadd -r appgroup && useradd -r -g appgroup appuser
-
-RUN mkdir -p /app/logs /app/data && chown -R appuser:appgroup /app
-
-# Copy built node_modules and code from builder stage
-COPY --from=builder --chown=appuser:appgroup /app/package*.json ./
-COPY --from=builder --chown=appuser:appgroup /app/node_modules ./node_modules
-COPY --from=builder --chown=appuser:appgroup /app/src ./src
-COPY --from=builder --chown=appuser:appgroup /app/public ./public
+# Create persistent storage and logs directory with non-root ownership
+# 'node' user is pre-created by the official Node Docker image (UID 1000)
+RUN mkdir -p /app/logs /app/data && chown -R node:node /app
 
 # Run as non-root user
-USER appuser
+USER node
 
 EXPOSE 10000
 
+# Health check using node native HTTP request (no curl package dependency required)
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:10000/health || exit 1
+  CMD node -e "const http = require('http'); http.get('http://127.0.0.1:10000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1));"
 
-ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "src/server.js"]
